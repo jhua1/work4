@@ -8,9 +8,10 @@
 
 void main(){
   
-  struct stat *p = (struct stat*)malloc(sizeof(struct stat));
-  int test = stat("statStuff.c",p);
+  struct stat p;
+  int test = stat("statStuff.c",&p);
 
-  printf("statStuff.c mode: %lu\n",(unsigned long)p->st_atime);
-
+  printf("file size: %ld\n", p.st_size);
+  printf("file mode: %d\n", p.st_mode);
+  printf("last change to file: %s\n", asctime(gmtime(&p.st_atime)));
 }
