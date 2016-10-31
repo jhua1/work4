@@ -7,23 +7,6 @@
 #include <time.h>
 #include <math.h>
 
-char *modeString(struct stat p){
-  char *ret[9];
-  strcat(ret,*(p.st_mode & S_IRUSR) ? "r":"-");
-  strcat(ret,*(p.st_mode & S_IWUSR) ? "w":"-");
-  strcat(ret,*(p.st_mode & S_IXUSR) ? "x":"-");
-
-  strcat(ret,*(p.st_mode & S_IRGRP) ? "r":"-");
-  strcat(ret,*(p.st_mode & S_IWGRP) ? "w":"-");
-  strcat(ret,*(p.st_mode & S_IXGRP) ? "x":"-");
-
-  strcat(ret,*(p.st_mode & S_IROTH) ? "r":"-");
-  strcat(ret,*(p.st_mode & S_IWOTH) ? "w":"-");
-  strcat(ret,*(p.st_mode & S_IXOTH) ? "x":"-");
-
-  return ret;
-}
-
 void main(){
   
   struct stat p;
@@ -38,7 +21,18 @@ void main(){
   size = size%((int)pow(2,10));
   printf(" %d B\n",(int)(size));
 
-  printf("file mode: %o: %s\n",~S_IFMT&p.st_mode,modeString(p));
+  printf((p.st_mode & S_IRUSR) ? "r":"-");
+  printf((p.st_mode & S_IWUSR) ? "w":"-");
+  printf((p.st_mode & S_IXUSR) ? "x":"-");
+
+  printf((p.st_mode & S_IRGRP) ? "r":"-");
+  printf((p.st_mode & S_IWGRP) ? "w":"-");
+  printf((p.st_mode & S_IXGRP) ? "x":"-");
+
+  printf((p.st_mode & S_IROTH) ? "r":"-");
+  printf((p.st_mode & S_IWOTH) ? "w":"-");
+  printf((p.st_mode & S_IXOTH) ? "x":"-");
+  printf("\n");
 
   printf("last change to file: %s\n", asctime(gmtime(&p.st_atime)));
 }
